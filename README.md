@@ -1,5 +1,5 @@
 # mootalk
-### 簡易版 wootalk
+簡易版 wootalk
 
 ## Demo
 
