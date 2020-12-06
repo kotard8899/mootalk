@@ -2,7 +2,7 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
-const { userJoin, userLeave } = require('./utils/users')
+const { userJoin, checkRoom } = require('./utils/users')
 
 const app = express();
 const server = http.createServer(app);
@@ -12,14 +12,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 io.on('connection', socket => {
-    console.log('run')
     socket.on('start', () => {
         const me = socket.id;
     
         io.emit('currentId', me);
         
-        const { user, canStart } = userJoin(socket.id); 
-        console.log(user.room)
+        const { user, canStart } = userJoin(socket.id);
+
         socket.join(user.room);
 
         if (canStart)
@@ -37,7 +36,7 @@ io.on('connection', socket => {
         
         socket.on('disconnect', () => {
             // const user = userLeave(socket.id);
-            console.log(socket.id)
+            checkRoom(user.room)
             // if(user){
                 io.to(user.room)
                     .emit('sysMsg', '對方已離開，因為你太無聊了，去找跟你的人生一樣無聊的人吧');

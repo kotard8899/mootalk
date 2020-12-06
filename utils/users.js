@@ -23,8 +23,15 @@ const userLeave = (id) => {
     }
 };
 
+const checkRoom = (room) => {
+    const userInRoom = users.filter(user => user.room === room);
+    if (userInRoom.length === 1) {
+        users.push('empty');
+    }
+}
+
 module.exports = {
     userJoin,
-    userLeave
+    checkRoom
 }
 
