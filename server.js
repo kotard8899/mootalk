@@ -28,25 +28,18 @@ io.on('connection', socket => {
         }
         
         socket.on('inputMsg', (chatMsg) => {
-                io.to(user.room)
-                    .emit('outputMsg', {chatMsg, id:socket.id});
+            io.to(user.room)
+                .emit('outputMsg', {chatMsg, id:socket.id});
         });
 
         socket.on('gone', () => socket.disconnect());
         
         socket.on('disconnect', () => {
-            // const user = userLeave(socket.id);
-            checkRoom(user.room)
-            // if(user){
-                io.to(user.room)
-                    .emit('sysMsg', '對方已離開，因為你太無聊了，去找跟你的人生一樣無聊的人吧');
-            // };
+            checkRoom(user.room);
+            io.to(user.room)
+                .emit('sysMsg', '對方已離開，因為你太無聊了，去找跟你的人生一樣無聊的人吧');
         });
     });
-
-    
-    
-
 });
 
 const PORT = process.env.PORT || 3000;

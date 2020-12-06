@@ -53,18 +53,17 @@ const sendMsg = (e) => {
 } 
 
 const outputMsg = (msg, id) => {
-    let tempClass = 'stranger';
-    if (id === myId) { 
-        tempClass = 'me'
-    }
-    if (id === 'system') {
-        tempClass = 'system'
-    }
+    const tempClass = 
+        (id === myId) ? 'me' :
+        (id === 'system') ? 'system' : 
+        'stranger';
     const div = $('<div></div>')
         .addClass("text")
         .addClass(tempClass)
         .html(msg);
 
     $('.chat-wrapper').append(div);
-    $("html, body").animate({ scrollTop: $(document).height() }, 1000);
-} 
+    $("html, body").animate({ 
+        scrollTop: $(document).height() 
+    }, 1000);
+} ;
